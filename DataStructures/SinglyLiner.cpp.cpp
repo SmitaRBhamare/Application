@@ -1,4 +1,4 @@
-//Problem Statement : 211,212,213.........218...........222
+
 //Singly Linear 
 #include<iostream>
 using namespace std;

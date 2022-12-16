@@ -1,8 +1,7 @@
-//program243
 #include<iostream>
 using namespace std;
 
-#pragma pack(1)   
+#pragma pack(1)
 struct node
 {
     int data;
@@ -15,273 +14,254 @@ typedef struct node * PNODE;
 
 class DoublyLL
 {
-    public :
-       PNODE First;
-       PNODE Last;
+    public:
+        PNODE First;
+        int iCount;
 
-       DoublyLL();
+        DoublyLL();
+        void InsertFirst(int no);
+        void InsertLast(int no);
+        void InsertAtPos(int no, int ipos);
 
-       void InsertFirst(int no);
-       void InsertLast(int no);
-       void InsertAtPos(int no, int ipos);
+        void DeleteFirst();
+        void DeleteLast();
+        void InsertAtPos(int ipos);
+        void DeleteAtPos(int ipos);
 
-       void DeleteFirst();
-       void DeleteLast();
-       void DeleteAtPos(int ipos);
-
-       void Display();
-       int Count();
+        void Display();
 };
 
-DoublyLL:: DoublyLL()
+DoublyLL::DoublyLL()
 {
     First = NULL;
-    Last = NULL;
+    iCount = 0;
 }
 
-void DoublyLL :: InsertFirst(int no)
+void DoublyLL::InsertFirst(int no)
 {
-    PNODE newn = new NODE;
+    PNODE newn = new(NODE);
     newn->data = no;
     newn->next = NULL;
-    newn -> prev = NULL;
+    newn->prev = NULL;
 
-    if((First == NULL) && (Last == NULL)) // LL is empty
+    if(First == NULL)
     {
-        First = newn;
-        Last = newn;
-    }
-    else    // If LL contains one or more nodes
+       First = newn;
+      
+       iCount++; 
+    } 
+    else
     {
         newn->next = First;
         First->prev = newn;
-        First = newn; 
-    }
+        First = newn;
 
-    First->prev = Last;
-    Last->next = First;
+        iCount++;  
+    }  
 }
 
-void DoublyLL :: InsertLast(int no)
+void DoublyLL::InsertLast(int no)
 {
-    PNODE newn = new NODE; 
+    PNODE newn = new(NODE);
+    PNODE temp = First;
 
     newn->data = no;
     newn->next = NULL;
-    newn -> prev = NULL;
+    newn->prev = NULL;
 
-    if((First == NULL) && (Last == NULL)) // LL is empty
+    if(First == NULL)
     {
-        First = newn;
-        Last = newn;
-    }
-    else    // If LL contains one or more nodes
+       First = newn;
+      
+       iCount++; 
+    } 
+    else
     {
-        Last-> next = newn;
-        newn->prev = Last;
-        Last = newn;
-    }
-
-    First->prev = Last;
-    Last->next = First;
+        while(temp -> next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = newn;
+        newn->prev = temp; 
+        iCount++;  
+    }  
 }
 
-void DoublyLL ::  Display()
+void DoublyLL::InsertAtPos(int no, int ipos)
 {
-    PNODE Temp = First;
-    if(First == NULL && Last == NULL)
-    {
-        cout<<"Linked list i empty"<<"\n";
-        return;
-    }
-
-    cout<<"Elements of Linked list are :"<<" \n";
-    do
-    {
-        cout<<"|"<<Temp->data<<"|->";
-        Temp = Temp-> next;
-    }while(Temp!= Last->next);
-
-    cout<<"\n";
-}
-
-int DoublyLL :: Count()
-{
-    int iCnt = 0;
-    PNODE temp = First;
-
-    if(First == NULL && Last == NULL)
-    {
-        return iCnt;
-    }
-
-    do
-    {
-        iCnt++;
-        temp= temp-> next;
-    }while(temp != Last->next);
-
-    return iCnt;
-}
-
-void DoublyLL ::  DeleteFirst()
-{
-    if(First == NULL && Last == NULL) // Empty LL
-    {
-        return;
-    }
-    else if(First == Last)    // Single node
-    {
-        delete(First);
-        First = NULL;
-        Last= NULL;
-    }
-    else    // More than one node
-    {
-        First = First ->next;
-        delete(Last->next);        // free((*First)->prev);
-
-        First->prev = Last;
-        Last->next = First;
-    }
-}
-
-void DoublyLL ::  DeleteLast()
-{
-    if(First == NULL && Last == NULL) // Empty LL
-    {
-        return;
-    }
-    else if(First == Last)    // Single node
-    {
-        delete(First);
-        First = NULL;
-        Last= NULL;
-    }
-    else    // More than one node
-    {
-        Last = Last-> prev;
-        delete(First)->prev;       // free((*Last)->next);
-
-        First->prev = Last;
-        Last->next = First;
-    }
-}
-
-void DoublyLL ::  InsertAtPos(int no, int ipos)
-{
-    int iNodeCnt = Count();
     PNODE newn = NULL;
     PNODE temp = NULL;
-    int iCnt = 0;
 
-    if((ipos < 1) || (ipos > iNodeCnt+1))
+    if(ipos <1 || ipos>iCount+1)
     {
-        cout<<"Invalid position\n";
+        cout<<"Invalid position"<<"\n";
         return;
     }
 
-    if(ipos ==1)
+    if(ipos == 1)
     {
         InsertFirst(no);
     }
-    else if(ipos == iNodeCnt+1)
+    else if(ipos == iCount+1)
     {
-         InsertLast(no);
+        InsertLast(no);
     }
     else
     {
-        PNODE newn = new NODE;
+        newn = new NODE;
+
         newn->data = no;
         newn->next = NULL;
         newn->prev = NULL;
 
         temp = First;
-        for(iCnt = 1; iCnt < ipos-1; iCnt++)
-        {
-            temp = temp->next;
-        }
 
+        for(int iCnt = 1; iCnt < ipos-1 ; iCnt++)
+        {
+            temp = temp ->next;
+        }
         newn->next = temp->next;
         temp->next->prev = newn;
-
         temp->next = newn;
         newn->prev = temp;
     }
 }
 
-void DoublyLL :: DeleteAtPos(int ipos)
+void DoublyLL::DeleteFirst()
 {
-    int iNodeCnt = Count();
     PNODE temp = NULL;
-    int iCnt = 0;
-
-    if((ipos < 1) || (ipos > iNodeCnt))
+    if(First == NULL)
     {
-        printf("Invalid position\n");
-        return;
+        return ;
     }
-
-    if(ipos ==1)
+    else if(First->next == NULL)
     {
-        DeleteFirst();
+        delete First ;
+        First = NULL;///////////////IMP
+        iCount--;
     }
-    else if(ipos == iNodeCnt)
+    else
     {
-        DeleteLast();
+        First = First->next;
+        delete temp;
+        First->prev = NULL;
+        iCount--;
+    }
+}
+
+void DoublyLL::DeleteLast()
+{
+    PNODE temp = NULL;
+
+    if(First == NULL)
+    {
+        return ;
+    }
+    else if(First->next == NULL)
+    {
+        delete First ;
+        First = NULL;        ///////////IMP
+        iCount--;
     }
     else
     {
         temp = First;
-        for(iCnt = 1; iCnt < ipos-1; iCnt++)
+
+        while(temp->next->next != NULL)
         {
             temp = temp->next;
         }
 
-        temp->next = temp->next->next;
-        delete(temp->next->prev);
-        temp->next->prev = temp;
+        delete temp->next;
+        temp->next = NULL;
+        iCount--;
+        
     }
 }
 
+void DoublyLL::DeleteAtPos(int ipos)
+{
+    PNODE temp1 = NULL;
+    PNODE temp2 = NULL;
+
+    if(ipos <1 || ipos>iCount+1)
+    {
+        cout<<"Invalid position"<<"\n";
+        return;
+    }
+    
+    if(ipos == 1)
+    {
+        DeleteFirst();
+    }
+    else if(ipos == iCount+1)
+    {
+        DeleteLast();
+    }
+    else
+    {   
+        temp1 = First;
+
+        for(int iCnt = 1; iCnt < ipos - 1; iCnt++)
+        {
+            temp1 = temp1->next;
+        }
+
+        temp2 = temp1->next;
+
+        temp1->next = temp2->next;
+        temp2->next->prev = temp1;
+
+        delete(temp2);    
+    }
+}
+
+void DoublyLL::Display()
+{
+    PNODE temp = First;
+
+    while(temp != NULL)
+    {
+        cout<<"|"<<temp->data<<"|<=>";
+        temp = temp->next;
+    }
+    cout<<"\n";
+   
+}
+
+
 int main()
 {
-    int iRet = 0;
-    DoublyLL dobj;
-
-
-    dobj.InsertFirst(51);
-    dobj.InsertFirst(21);
-    dobj.InsertFirst(11);
-
-    dobj.Display();
-    iRet = dobj.Count();
-    cout<<"Number of nodes are :"<<iRet<<"\n";
+    DoublyLL obj;
     
-    dobj.InsertLast(101);
-    dobj.InsertLast(111);
-    dobj.InsertLast(121);
+    obj.InsertFirst(51);
+    obj.InsertFirst(21);
+    obj.InsertFirst(11);
 
-    dobj.Display();
-    iRet = dobj.Count();
-    cout<<"Number of nodes are :"<<iRet<<"\n";
+    obj.Display();
+    cout<<"Number of nodes are :"<<obj.iCount<<"\n";
+    
+    obj.InsertLast(101);
+    obj.InsertLast(111);
+    obj.InsertLast(121);
 
-    dobj.InsertAtPos(105,5);
-    dobj.Display();
-    iRet = dobj.Count();
-    cout<<"Number of nodes are :"<<iRet<<"\n";
+    obj.Display();
+    cout<<"Number of nodes are :"<<obj.iCount<<"\n";
+   
+    obj.InsertAtPos(105,5);
 
-    dobj.DeleteAtPos(5);
-    dobj.Display();
-    iRet = dobj.Count();
-    cout<<"Number of nodes are :"<<iRet<<"\n";
+    obj.Display();
+    cout<<"Number of nodes are :"<<obj.iCount<<"\n";
 
-    dobj.DeleteFirst();
-    dobj.DeleteLast();
+    obj.DeleteAtPos(5);
 
-    dobj.Display();
-    iRet = dobj.Count();
-    cout<<"Number of nodes are :"<<iRet<<"\n";
+    obj.Display();
+   cout<<"Number of nodes are :"<<obj.iCount<<"\n";
 
+    obj.DeleteFirst();
+    obj.DeleteLast();
+
+    obj.Display();
+   cout<<"Number of nodes are :"<<obj.iCount<<"\n";
     return 0;
 }

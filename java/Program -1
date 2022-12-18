@@ -1,0 +1,37 @@
+//Problem statements : program to divide two numbers.
+
+class Arithematic
+{
+    public int iNo1;
+    public int iNo2;
+    public int iAns;
+
+    Arithematic(int i, int j)
+    {
+        iNo1 = i;
+        iNo2 = j;   
+    }
+
+    int Divide()
+    {
+        iAns = iNo1 / iNo2;
+         return iAns;
+    } 
+}
+
+class Program1
+{
+    public static void main(String arg[])
+    {
+        int iValue1 = 200;
+        int iValue2 = 10;
+        int iRet = 0;
+
+        Arithematic dobj = new   Arithematic(iValue1, iValue2);
+
+        iRet = dobj.Divide();
+
+        System.out.println("Division is :"+iRet);
+
+    }
+}

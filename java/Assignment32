@@ -1,0 +1,64 @@
+//Problem statement  : Write a java program which accept N numbers from user and return difference between summation of even elements and summation of odd elements
+
+import java.util.*;
+class ArrayDemo
+{
+      public int Arr[];
+
+      public ArrayDemo(int iSize)
+      {
+            Arr = new int[iSize];
+      }
+
+      public void Accept()
+      {
+             Scanner sobj = new Scanner(System.in);
+            System.out.println("Enter the size of array");
+
+            for(int iCnt = 0; iCnt < Arr.length; iCnt++)
+            {
+                Arr[iCnt] = sobj.nextInt();
+            }
+      }
+
+      
+
+      public int Difference()
+      {
+            int iSum1 = 0, iSum2 = 0;
+            int iDiff = 0;
+            for(int iCnt = 0; iCnt < Arr.length; iCnt++)
+            {
+                  if(Arr[iCnt] % 2 == 0)
+                  {
+                        iSum1 = iSum1 + Arr[iCnt];
+                  }
+                  else
+                  {
+                        iSum2 = iSum2 + Arr[iCnt];
+                  } 
+            }
+
+            iDiff = iSum1 - iSum2;
+            return iDiff;
+      }
+}
+
+class Program32_1
+{
+      public static void main(String Arg[])
+      {
+            Scanner sobj = new Scanner(System.in);
+
+            System.out.println("Enter the size of array");
+            int iValue = sobj.nextInt();
+
+            ArrayDemo aobj = new ArrayDemo(iValue);
+
+            aobj.Accept();
+
+            int iRet = aobj.Difference();
+
+            System.out.println("Difference between even and odd numbers is : "+iRet);
+      }
+}

@@ -1,0 +1,54 @@
+//Problem statement  : Write a java program which accpet N number from user and accept one another number as NO , check wheather NO is present or not
+
+import java.util.*;
+
+class Number
+{
+      public boolean Check(int Arr[], int iNo)
+      {
+            boolean Flag = false;
+            for(int iCnt  = 0; iCnt< Arr.length; iCnt++)
+            {
+                  if(Arr[iCnt] == iNo)
+                  {
+                        Flag = true;
+                        break;
+                  }
+            }
+            return Flag;
+      }
+}
+
+
+class Program34_1
+{
+      public static void main(String arr[])
+      {
+            Scanner sobj = new Scanner(System.in);
+            System.out.println("Enter the size of an array ");
+            int iNo = sobj.nextInt();
+            int Arr[] = new int[iNo];
+
+            for(int iCnt = 0; iCnt < iNo; iCnt++)
+            {
+                System.out.print("Enter "+iCnt+" Number : ");
+                Arr[iCnt] = sobj.nextInt();
+            }
+
+            System.out.println("Enter the number ");
+            int iValue = sobj.nextInt();
+
+            Number nobj = new Number();
+
+            boolean bRet = nobj.Check(Arr, iValue);
+
+            if(bRet == true)
+            {
+               System.out.println("True");
+            }
+            else
+            {
+               System.out.println("False");
+            }     
+      }
+}

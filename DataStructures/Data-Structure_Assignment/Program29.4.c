@@ -1,0 +1,90 @@
+//Problem Statement : Write a program which return the addition of all even elements from signly linear linked list.
+
+#include<stdio.h>
+#include<stdlib.h>
+
+
+struct node
+{
+    int Data;
+    struct node* Next;
+};
+
+typedef struct node NODE;
+typedef struct node* PNODE;
+typedef struct node** PPNODE;
+
+void InsertFirst(PPNODE First, int iNo)
+{
+    PNODE newn = NULL;
+    newn = (PNODE)malloc (sizeof(NODE));
+    
+    newn->Data = iNo;
+    newn->Next = NULL;
+
+    if(*First == NULL)
+    {
+       *First =newn;
+    }
+    else
+    {
+        newn->Next = *First;
+        *First = newn;
+    }
+}
+
+void Display(PNODE First)
+{
+   
+    while(First != 0)
+    {
+        printf("|%d|->",First->Data);
+        First = First->Next;
+    }
+    printf("NULL\n");
+}
+
+
+int SecMaximum(PNODE First)
+{
+    int iMax1 = First->Data;
+    int iMax2 = First->Data;
+    while(First != 0)
+    {
+        if((iMax2 < First->Data) && (iMax2< iMax1))
+        {
+            iMax2 = First->Data; 
+        }
+        else if (iMax2 >=iMax1)
+        {
+            iMax2 = First->Data;
+        }
+        
+        if(iMax1 < First-> Data)
+        {
+            iMax2 = iMax1;
+            iMax1 = First->Data;         
+        }
+        First = First->Next;  
+    } 
+    return iMax2;   
+}
+
+
+int main()
+{
+   PNODE Head = NULL;
+
+    InsertFirst(&Head, 240);
+    InsertFirst(&Head, 320);
+    InsertFirst(&Head, 230);
+    InsertFirst(&Head, 110);
+    
+
+    Display(Head);
+
+    int iRet = SecMaximum(Head);
+
+    printf("Second Largest number is : %d", iRet);
+    return 0;
+}

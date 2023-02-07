@@ -1,0 +1,116 @@
+
+account = []
+
+while(1)
+  puts "-----------------------------------------------------------------------------------"
+  puts "Press 1 : To create new account"
+  puts "Press 2 : To enter into existing account"
+  puts "Press 3 : To exit from the application"
+  puts "-----------------------------------------------------------------------------------"
+  opt_number = gets.chomp
+  case opt_number
+  when "1"
+    
+    puts "Enter the mobile number"
+    mob_number= gets.chomp.to_i
+    puts "Enter the account number"
+    acc_num= gets.chomp.to_i
+    puts "Enter the password"
+    password = gets.chomp
+
+    acc_balance = 0
+    person = [mob_number, acc_num, password, acc_balance]
+    account << person
+
+  when "2"
+    puts "Enter mobile number"
+    @number= gets.chomp.to_i
+    puts "Enter the passowrd"
+    password = gets.chomp
+
+    while(1)
+      account.each {|x| 
+      if x[0]== @number && x[2] == password
+      # Menu (Loop
+      puts "-----------------------------------------------------------------------------------"
+      puts "Press 1 : To deposit account"
+      puts "Press 2 : To transfer money"
+      puts "Press 3 : To display account balance"
+      puts "Press 4 : To display Transaction"
+      puts "Press 5 : To exit from application"
+      puts "-----------------------------------------------------------------------------------"
+      end
+      }
+     
+    options = gets.chomp
+    case options 
+    when "1"
+      puts "Enter the amount that you want to deposit"
+      @acc_deposit = gets.chomp.to_i
+      puts "You trasfered #{@acc_deposit} rupees to your account!"
+      account.each {|x| 
+      if x[0]== @number 
+        x[1] = x[1] + @acc_deposit
+      end
+      }
+
+    when "2"
+      puts "Enter mobile number to transfer money"
+      @mobile_no = gets.chomp.to_i
+      account.each {|y| 
+        account.each {|x| 
+          if y[0] == @mobile_no && x[0] != @mobile_no
+            puts "Enter the amount"
+            @amount_trans = gets.chomp.to_i
+            if x[0]== @number 
+              if x[1] < @amount_trans
+                puts "-----------------------------------------------------------------------------------"
+                puts "Account balace is low" 
+                puts "-----------------------------------------------------------------------------------"
+              else
+                puts "Trasferred  rupees #{@amount_trans}  to #{@mobile_no}"
+                options = gets.chomp
+                y[1] = y[1] + @amount_trans
+                x[1] = x[1] - @amount_trans
+              end
+            end
+          else
+            puts "-----------------------------------------------------------------------------------"
+            "Enter valid account number"
+            puts "-----------------------------------------------------------------------------------"
+          end
+          }   
+      }
+    when "3"
+      account.each {|x| 
+        if x[0]== @number 
+          puts "Account balance is #{x[1]}"
+          break
+        end
+      }
+      
+    when "4"
+      puts "-----------------------------------------------------------------------------------"
+      puts  "Rupees #{@acc_deposit} deposited in your account!"
+      puts  "Rupees #{@amount_trans}  is transeferred to #{@mobile_no} mobile number !"
+      puts "-----------------------------------------------------------------------------------"
+    when "5"
+      puts "-----------------------------------------------------------------------------------"
+      puts "Thank for using application!"
+      puts "-----------------------------------------------------------------------------------"
+      break
+    end
+  end
+  when "3"
+    puts "-----------------------------------------------------------------------------------"
+    puts "Thank you for using application"
+    puts "-----------------------------------------------------------------------------------"
+    break
+  else
+    puts "-----------------------------------------------------------------------------------"
+    "Please enter valid number!"
+    puts "-----------------------------------------------------------------------------------"
+    break
+  end
+end
+
